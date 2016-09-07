@@ -1,0 +1,25 @@
+{
+  "name": "di-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "es5/plugin.js",
+  "scripts": {
+    "es5": "babel -w -s inline --presets es2015 --plugins add-module-exports -d es5 src",
+    "prepublish": "npm run es5",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jakwuh <jakwuh@gmail.ru>",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.0.1",
+    "babel-cli": "^6.14.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.14.0",
+    "di.js": "^1.9.1",
+    "escodegen": "^1.8.1",
+    "install": "^0.8.1",
+    "loader-utils": "^0.2.15",
+    "npm": "^3.10.6",
+    "webpack": "^1.13.2"
+  }
+}
