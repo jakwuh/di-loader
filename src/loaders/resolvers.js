@@ -21,7 +21,7 @@ export default function () {
             'var staticResolver = function(config) {' +
             '   return function(moduleName) {' +
             '       if (config[moduleName]) {' +
-            '           return config[moduleName]()();' +
+            '           return config[moduleName]();' +
             '       }' +
             '   }' +
             '};'

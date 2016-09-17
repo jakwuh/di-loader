@@ -12,7 +12,7 @@ export function uniq(arr) {
     return out;
 }
 
-export function parseObjectAST(ast) {
+export function parseDescriptorAST(ast) {
     const descriptor = {};
     const script = new vm.Script("value = " + generate(ast));
     const context = new vm.createContext(descriptor);

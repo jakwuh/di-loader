@@ -2,14 +2,18 @@
   "name": "di-loader",
   "version": "1.0.0",
   "description": "",
-  "main": "es5/plugin.js",
+  "main": "lib/plugin.js",
   "scripts": {
-    "es5": "babel -w -s inline --presets es2015 --plugins add-module-exports -d es5 src",
-    "prepublish": "npm run es5",
+    "start": "babel -s inline --presets es2015 --plugins add-module-exports -d lib -w src",
+    "build": "babel -s inline --presets es2015 --plugins add-module-exports -d lib src",
+    "prepublish": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jakwuh <jakwuh@gmail.ru>",
   "license": "ISC",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "dependencies": {
     "async": "^2.0.1",
     "babel-cli": "^6.14.0",
