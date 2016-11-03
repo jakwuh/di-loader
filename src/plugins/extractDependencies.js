@@ -52,7 +52,7 @@ export default function (compilation, callback) {
             module.dependencies.map(d => d.module).filter(filter).forEach(extractResolvers);
         };
 
-        requiredModules.forEach(extractResolvers);
+        requiredModules.filter(filter).forEach(extractResolvers);
 
         callback();
 
