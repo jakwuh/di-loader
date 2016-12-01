@@ -1,6 +1,5 @@
 import PrefetchDependency from 'webpack/lib/dependencies/PrefetchDependency';
-import {extractClassNameFromModule} from '../utils';
-import {Scanner} from '../Scanner';
+import {extractClassNameFromModule, sortObject} from '../utils';
 import async from 'async';
 import path from 'path';
 
@@ -17,22 +16,23 @@ export default function (compilation, callback) {
     };
 
     function prefetch(request, callback) {
-        compilation.prefetch(compiler.context, new PrefetchDependency(request), callback);
+        if (!this.prefetchedPaths.has(request)) {
+            compilation.prefetch(compiler.context, new PrefetchDependency(request), (...args) => {
+                this.prefetchedPaths.set(request, args);
+                callback(...args);
+            });
+        } else {
+            callback(...this.prefetchedPaths.get(request));
+        }
     }
 
-    let paths = new Scanner({extensions: this.extensions, filter: this.filter})
-        .scanDirectories([].concat(this.src))
-        .getPaths()
-        .filter(this.filter);
-
-    async.map(paths, prefetch, (err, modules) => {
-
+    async.map(this.paths, prefetch.bind(this), (err, modules) => {
         if (err) {
             reject(err);
             return callback(err);
         }
 
-        let requiredModules = modules;
+        let requiredModules = modules.sort((a, b) => a.userRequest < b.userRequest);
 
         let modulesSet = new WeakSet();
 
@@ -57,8 +57,8 @@ export default function (compilation, callback) {
         callback();
 
         resolve({
-            dependencies: this.dependencies,
-            resolvers: this.resolvers
+            dependencies: sortObject(this.dependencies),
+            resolvers: sortObject(this.resolvers)
         });
 
     });

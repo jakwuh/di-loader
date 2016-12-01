@@ -2,6 +2,7 @@ import {name as packageName} from '../package.json';
 import parseDefinitionsPlugin from './plugins/parseDefinitions';
 import prefetchDependenciesPlugin from './plugins/prefetchDependencies';
 import extractDependenciesPlugin from './plugins/extractDependencies';
+import {Scanner} from './Scanner';
 
 export default class DILoaderPlugin {
 
@@ -28,6 +29,13 @@ export default class DILoaderPlugin {
             [`${packageName}/resolvers`]: `${packageName}/lib/loaders/resolvers`,
             [`${packageName}/container`]: `${packageName}/lib/loaders/container`
         });
+
+        this.paths = new Scanner({extensions: this.extensions, filter: this.filter})
+            .scanDirectories([].concat(this.src))
+            .getPaths()
+            .filter(this.filter);
+
+        this.prefetchedPaths = new Map();
 
         compiler.parser.plugin('call Object.defineProperty', parseDefinitionsPlugin.bind(this));
         compiler.plugin('compilation', prefetchDependenciesPlugin.bind(this));

@@ -35,7 +35,6 @@ export default function () {
         ].join('\n');
 
         cb(null, code);
-
     }, cb);
 
 

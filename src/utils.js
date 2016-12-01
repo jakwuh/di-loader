@@ -24,3 +24,11 @@ export function extractClassNameFromModule(module) {
     return path.basename(module.userRequest, '.js');
 }
 
+export function sortObject(o) {
+    let pairs = [];
+    for (let [key, value] of Object.entries(o)) {
+        pairs.push([key, value]);
+    }
+    pairs.sort((a, b) => a[0] > b[0] ? 1 : (a[0] < b[0] ? -1 : 0));
+    return pairs.reduce((memo, [key, value]) => Object.assign(memo, {[key]: value}), {});
+}

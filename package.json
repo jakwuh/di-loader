@@ -4,8 +4,8 @@
   "description": "",
   "main": "lib/plugin.js",
   "scripts": {
-    "start": "babel -s inline --presets es2015 --plugins add-module-exports -d lib -w src",
-    "build": "babel -s inline --presets es2015 --plugins add-module-exports -d lib src",
+    "start": "babel -s inline --presets es2015 --plugins add-module-exports,transform-object-entries -d lib -w src",
+    "build": "babel -s inline --presets es2015 --plugins add-module-exports,transform-object-entries -d lib src",
     "prepublish": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,6 +23,7 @@
   "devDependencies": {
     "babel-cli": "^6.14.0",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-entries": "^1.0.0",
     "babel-preset-es2015": "^6.14.0"
   }
 }
