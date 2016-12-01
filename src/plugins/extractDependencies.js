@@ -32,7 +32,7 @@ export default function (compilation, callback) {
             return callback(err);
         }
 
-        let requiredModules = modules.sort((a, b) => a.userRequest < b.userRequest);
+        let requiredModules = modules;
 
         let modulesSet = new WeakSet();
 
