@@ -3,13 +3,7 @@ import path from 'path';
 import vm from 'vm';
 
 export function uniq(arr) {
-    let out = [];
-    arr.forEach(el => {
-        if (!~out.indexOf(el)) {
-            out.push(el);
-        }
-    });
-    return out;
+    return Array.from(new Set(arr));
 }
 
 export function parseDescriptorAST(ast) {
