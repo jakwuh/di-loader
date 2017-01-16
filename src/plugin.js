@@ -24,7 +24,9 @@ export default class DILoaderPlugin {
     }
 
     apply(compiler) {
-        Object.assign(compiler.options.resolveLoader.alias, {
+        let loaderOptions = compiler.options.resolveLoader;
+
+        Object.assign(loaderOptions.alias || (loaderOptions.alias = {}), {
             [`${packageName}/dependencies`]: `${packageName}/lib/loaders/dependencies`,
             [`${packageName}/resolvers`]: `${packageName}/lib/loaders/resolvers`,
             [`${packageName}/container`]: `${packageName}/lib/loaders/container`
@@ -37,9 +39,13 @@ export default class DILoaderPlugin {
 
         this.prefetchedPaths = new Map();
 
-        compiler.parser.plugin('call Object.defineProperty', parseDefinitionsPlugin.bind(this));
-        compiler.plugin('compilation', prefetchDependenciesPlugin.bind(this));
         compiler.plugin('make', extractDependenciesPlugin.bind(this));
+        compiler.plugin('compilation', (compilation, data) => {
+            prefetchDependenciesPlugin.call(this, compilation, data);
+            data.normalModuleFactory.plugin('parser', (parser, options) => {
+                parser.plugin('call Object.defineProperty', parseDefinitionsPlugin.bind(this));
+            });
+        });
     }
 
 }
