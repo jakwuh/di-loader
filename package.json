@@ -1,6 +1,6 @@
 {
   "name": "di-loader",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "di-loader",
   "main": "lib/plugin.js",
   "scripts": {
