@@ -1,19 +1,8 @@
 import {parseDescriptorAST} from '../utils';
 
 const TYPES = {
-    MemberExpression: 'MemberExpression',
-    Identifier: 'Identifier',
     Literal: 'Literal'
 };
-
-function extractObjectName(ast) {
-    switch (ast.type) {
-        case TYPES.MemberExpression:
-            return ast.object.name + "." + ast.property.name;
-        case TYPES.Identifier:
-            return ast.name;
-    }
-}
 
 function extractString(ast) {
     if (ast.type === TYPES.Literal) {
