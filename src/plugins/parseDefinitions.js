@@ -24,9 +24,8 @@ function extractString(ast) {
 export default function(ast) {
     let descriptorAST = ast.arguments[2];
     let property = extractString(ast.arguments[1]);
-    let object = extractObjectName(ast.arguments[0]);
 
-    if (~['module.exports', 'exports'].indexOf(object) && property === this.exportName) {
+    if (property === this.exportName) {
         Object.assign(this.dependencies, parseDescriptorAST(descriptorAST));
     }
 }
